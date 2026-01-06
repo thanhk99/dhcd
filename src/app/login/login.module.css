@@ -1,0 +1,212 @@
+.container {
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    position: relative;
+}
+
+.backButton {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    flex: 1;
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-right: 2.5rem;
+    /* Offset back button for centering title */
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+}
+
+.logoContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    background-color: var(--accent);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(98, 0, 238, 0.3);
+}
+
+.heroSection {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.heroHeading {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+}
+
+.heroText {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    padding: 0 1rem;
+}
+
+.tabs {
+    background-color: var(--input-bg);
+    border-radius: 12px;
+    display: flex;
+    padding: 0.35rem;
+    margin-bottom: 2rem;
+}
+
+.tab,
+.activeTab {
+    flex: 1;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 9px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab {
+    background: transparent;
+    color: var(--text-secondary);
+}
+
+.activeTab {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form {
+    margin-bottom: 2rem;
+}
+
+.passwordWrapper {
+    position: relative;
+}
+
+.forgotPassword {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.submitBtn {
+    margin-top: 1rem;
+    height: 3.5rem;
+    font-size: 1.125rem;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: var(--divider);
+}
+
+.divider span {
+    padding: 0 1rem;
+}
+
+.biometric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.biometricBtn {
+    background-color: var(--input-bg);
+    border: none;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    cursor: pointer;
+    margin-bottom: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.biometricBtn:hover {
+    background-color: var(--divider);
+}
+
+.biometricLabel {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+.footer {
+    text-align: center;
+    padding-bottom: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+}
+
+.supportLink {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* Desktop adaptations */
+@media (min-width: 768px) {
+    .container {
+        padding-top: 3rem;
+    }
+}
