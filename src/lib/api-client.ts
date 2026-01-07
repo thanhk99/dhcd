@@ -1,4 +1,4 @@
-import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 import { env } from '@/schemas/env';
 
 /**
@@ -6,25 +6,21 @@ import { env } from '@/schemas/env';
  */
 export const apiClient = axios.create({
     baseURL: env.NEXT_PUBLIC_API_URL,
+    withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
 /**
- * Request Interceptor: Tự động đính kèm JWT Token vào Header
+ * Request Interceptor: Cookies sẽ được tự động gửi với withCredentials: true
  */
 apiClient.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
-        if (typeof window !== 'undefined') {
-            const token = localStorage.getItem('token');
-            if (token && config.headers) {
-                config.headers.Authorization = `Bearer ${token}`;
-            }
-        }
+        // Token sẽ được gửi tự động qua cookies, không cần thêm vào header
         return config;
     },
-    (error) => {
+    (error: AxiosError) => {
         return Promise.reject(error);
     }
 );
@@ -33,7 +29,7 @@ apiClient.interceptors.request.use(
  * Response Interceptor: Xử lý lỗi tập trung (401, 403, 500...)
  */
 apiClient.interceptors.response.use(
-    (response) => response,
+    (response: AxiosResponse) => response,
     async (error: AxiosError) => {
         const originalRequest = error.config;
 

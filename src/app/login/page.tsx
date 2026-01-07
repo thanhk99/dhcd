@@ -1,20 +1,18 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { ChevronLeft, Eye, EyeOff } from 'lucide-react';
 import styles from './login.module.css';
 import { Button } from '@/components/ui/Button/Button';
 import { Input } from '@/components/ui/Input/Input';
 import { Toast } from '@/components/ui/Toast/Toast';
-
-
+import { loginAction } from '@/actions/auth';
 
 const UserIcon = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
 );
-
-
 
 const QrCodeIcon = () => (
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -34,6 +32,10 @@ const QrCodeIcon = () => (
 );
 
 export default function LoginPage() {
+    const router = useRouter();
+    const [identifier, setIdentifier] = useState('');
+    const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error'; show: boolean }>({
         message: '',
@@ -45,15 +47,32 @@ export default function LoginPage() {
         setShowPassword(!showPassword);
     };
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Giả lập logic đăng nhập
-        const isSuccess = Math.random() > 0.5; // Demo ngẫu nhiên
 
-        if (isSuccess) {
-            setToast({ message: 'Đăng nhập thành công!', type: 'success', show: true });
-        } else {
-            setToast({ message: 'Đăng nhập thất bại. Vui lòng kiểm tra lại.', type: 'error', show: true });
+        if (!identifier || !password) {
+            setToast({ message: 'Vui lòng nhập đầy đủ mã cổ đông/CCCD và mật khẩu.', type: 'error', show: true });
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            const result = await loginAction({ identifier, password });
+
+            if (result.success) {
+                setToast({ message: 'Đăng nhập thành công!', type: 'success', show: true });
+
+                setTimeout(() => {
+                    router.push('/');
+                }, 1000);
+            } else {
+                setToast({ message: result.error || 'Đăng nhập thất bại.', type: 'error', show: true });
+            }
+        } catch (error: any) {
+            console.error('Login error:', error);
+            setToast({ message: 'Đã xảy ra lỗi. Vui lòng thử lại.', type: 'error', show: true });
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -89,6 +108,9 @@ export default function LoginPage() {
                         label="Mã cổ đông / CCCD"
                         placeholder="Nhập mã cổ đông hoặc CCCD"
                         icon={<UserIcon />}
+                        value={identifier}
+                        onChange={(e) => setIdentifier(e.target.value)}
+                        disabled={isLoading}
                     />
 
                     <div className={styles.passwordWrapper}>
@@ -98,11 +120,14 @@ export default function LoginPage() {
                             type={showPassword ? 'text' : 'password'}
                             rightIcon={showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                             onRightIconClick={togglePassword}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            disabled={isLoading}
                         />
                     </div>
 
-                    <Button fullWidth className={styles.submitBtn} type="submit">
-                        Đăng nhập
+                    <Button fullWidth className={styles.submitBtn} type="submit" disabled={isLoading}>
+                        {isLoading ? 'Đang đăng nhập...' : 'Đăng nhập'}
                     </Button>
                 </form>
 

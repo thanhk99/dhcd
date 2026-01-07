@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect } from 'react';
 import { CheckCircle, AlertCircle, X } from 'lucide-react';
 import styles from './Toast.module.css';
