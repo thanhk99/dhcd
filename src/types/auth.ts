@@ -4,7 +4,7 @@ export interface LoginRequest {
 }
 
 export interface AuthUser {
-    userId: number;
+    userId: string;
     username: string;
     email: string;
     roles: string[];
@@ -12,6 +12,8 @@ export interface AuthUser {
 
 export interface LoginResponse extends AuthUser {
     accessToken: string;
+    tokenType: string;
+    refreshToken?: string;
 }
 
 export interface LogoutResponse {

@@ -2,18 +2,12 @@
 
 import { cookies } from 'next/headers';
 import axios from 'axios';
+import { ApiResponse } from '@/types/api.types';
+import { LoginResponse } from '@/types/auth';
 
 interface LoginCredentials {
     identifier: string;
     password: string;
-}
-
-interface LoginResponse {
-    accessToken: string;
-    userId: number;
-    username: string;
-    email: string;
-    roles: string[];
 }
 
 export async function loginAction(credentials: LoginCredentials) {
@@ -26,25 +20,34 @@ export async function loginAction(credentials: LoginCredentials) {
             }
         );
 
-        if (response.data.accessToken) {
-            // Lưu token vào httpOnly cookie
+        const loginData = response.data;
+
+        if (loginData.accessToken) {
             const cookieStore = await cookies();
-            cookieStore.set('token', response.data.accessToken, {
+
+            // Lưu accessToken vào cookie (nếu cần cho SSR)
+            cookieStore.set('token', loginData.accessToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'lax',
-                maxAge: 60 * 60 * 24 * 7, // 7 days
+                maxAge: 60 * 60, // 1 hour for access token
                 path: '/',
             });
 
+            // Lưu refreshToken vào cookie (đảm bảo bảo mật)
+            if (loginData.refreshToken) {
+                cookieStore.set('refreshToken', loginData.refreshToken, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production',
+                    sameSite: 'lax',
+                    maxAge: 60 * 60 * 24 * 7, // 7 days
+                    path: '/',
+                });
+            }
+
             return {
                 success: true,
-                data: {
-                    userId: response.data.userId,
-                    username: response.data.username,
-                    email: response.data.email,
-                    roles: response.data.roles,
-                },
+                data: loginData,
             };
         }
 
@@ -73,6 +76,7 @@ export async function logoutAction() {
 
         const cookieStore = await cookies();
         cookieStore.delete('token');
+        cookieStore.delete('refreshToken');
 
         return { success: true };
     } catch (error) {

@@ -1,0 +1,61 @@
+.headerContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    background-color: #0c0c0c;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+.backBtn {
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    flex: 1;
+}
+
+.cancelBtn {
+    background: none;
+    border: none;
+    color: #888888;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px;
+}
+
+.stepper {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 0 16px 0;
+}
+
+.dot {
+    width: 24px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #333333;
+}
+
+.dotActive {
+    background-color: #00bfff;
+}

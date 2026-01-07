@@ -1,0 +1,178 @@
+.container {
+    min-height: 100vh;
+    background-color: #0c0c0c;
+    color: #ffffff;
+    padding-bottom: 120px;
+    /* Space for sticky footer */
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    position: sticky;
+    top: 0;
+    background-color: #0c0c0c;
+    z-index: 10;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.backBtn {
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.cancelBtn {
+    background: none;
+    border: none;
+    color: #888888;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.stepper {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 0;
+}
+
+.dot {
+    width: 24px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #333333;
+}
+
+.dotActive {
+    background-color: #00bfff;
+}
+
+.content {
+    padding: 16px;
+    padding-top: 110px;
+}
+
+.pageTitle {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.description {
+    font-size: 14px;
+    color: #888888;
+    line-height: 1.5;
+    margin-bottom: 24px;
+}
+
+.sectionTitle {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 32px 0 16px 0;
+    letter-spacing: 0.5px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #0c0c0c;
+    padding: 16px;
+    border-top: 1px solid #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 10;
+}
+
+.authNotice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #888888;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 12px;
+}
+
+.draftBtn {
+    flex: 1;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    color: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.submitBtn {
+    flex: 2;
+    background-color: #00bfff;
+    border: none;
+    color: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.tabHeader {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #1a1a1a;
+    padding-bottom: 12px;
+}
+
+.tabBtn {
+    background: transparent;
+    border: none;
+    color: #888;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.tabBtn:hover {
+    color: #fff;
+    background: #1a1a1a;
+}
+
+.tabBtnActive {
+    color: #fff;
+    background: #1a1a1a;
+    border: 1px solid #333;
+}
+
+.resultsContainer {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

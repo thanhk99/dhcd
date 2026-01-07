@@ -1,0 +1,81 @@
+.container {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 12px 0;
+}
+
+.meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.metaItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #888;
+    font-size: 13px;
+}
+
+.optionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.optionItem {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.optionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.optionName {
+    font-weight: 500;
+    color: #e0e0e0;
+}
+
+.optionPercentage {
+    font-weight: 700;
+    color: #00ff88;
+}
+
+.progressTrack {
+    height: 8px;
+    background: #333;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progressBar {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff88, #00ccff);
+    border-radius: 4px;
+    transition: width 0.6s ease-out;
+}
+
+.optionFooter {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+}

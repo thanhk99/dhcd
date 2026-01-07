@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button/Button';
 import { Input } from '@/components/ui/Input/Input';
 import { Toast } from '@/components/ui/Toast/Toast';
 import { loginAction } from '@/actions/auth';
+import { tokenManager } from '@/utils/tokenManager';
 
 const UserIcon = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
@@ -60,6 +61,11 @@ export default function LoginPage() {
             const result = await loginAction({ identifier, password });
 
             if (result.success) {
+                // Store token in memory for client-side API calls
+                if (result.data?.accessToken) {
+                    tokenManager.setAccessToken(result.data.accessToken);
+                }
+
                 setToast({ message: 'Đăng nhập thành công!', type: 'success', show: true });
 
                 setTimeout(() => {
