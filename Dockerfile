@@ -30,7 +30,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-ENV INTERNAL_API_URL=http://dhcd.vix.local:8085/api
+
 
 RUN apk add --no-cache libc6-compat
 

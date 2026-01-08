@@ -1,13 +1,8 @@
 import axios, { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { tokenManager } from '@/utils/tokenManager';
 import { ApiResponse, ApiError } from '@/types/api.types';
-import { env } from '@/schemas/env';
-
 // Base API URL
-const API_BASE_URL =
-    typeof window === 'undefined'
-        ? process.env.INTERNAL_API_URL
-        : env.NEXT_PUBLIC_API_URL;
+export const API_BASE_URL = 'http://dhcd.vix.local:8085/api';
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({

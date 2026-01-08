@@ -12,7 +12,7 @@ interface LoginCredentials {
 
 export async function loginAction(credentials: LoginCredentials) {
     try {
-        const baseUrl = (process.env.INTERNAL_API_URL) || process.env.NEXT_PUBLIC_API_URL;
+        const baseUrl = 'http://dhcd.vix.local:8085/api';
         const response = await axios.post<LoginResponse>(
             `${baseUrl}/auth/login`,
             credentials,
@@ -67,7 +67,7 @@ export async function loginAction(credentials: LoginCredentials) {
 
 export async function logoutAction() {
     try {
-        const baseUrl = process.env.INTERNAL_API_URL!;
+        const baseUrl = 'http://dhcd.vix.local:8085/api';
         await axios.post(
             `${baseUrl}/auth/logout`,
             {},
