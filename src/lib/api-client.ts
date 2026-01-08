@@ -4,10 +4,10 @@ import { ApiResponse, ApiError } from '@/types/api.types';
 import { env } from '@/schemas/env';
 
 // Base API URL
-// Prioritize INTERNAL_API_URL if on server side, otherwise use NEXT_PUBLIC_API_URL
-const API_BASE_URL = (typeof window === 'undefined' && process.env.INTERNAL_API_URL)
-    ? process.env.INTERNAL_API_URL
-    : env.NEXT_PUBLIC_API_URL;
+const API_BASE_URL =
+    typeof window === 'undefined'
+        ? process.env.INTERNAL_API_URL
+        : env.NEXT_PUBLIC_API_URL;
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({

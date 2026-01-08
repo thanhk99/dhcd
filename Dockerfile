@@ -28,7 +28,8 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-ENV NEXT_PUBLIC_API_URL=http://bedhcd-prod1.1:8085/api
+ENV NEXT_PUBLIC_API_URL=http://dhcd.vix.local:8085/api
+ENV INTERNAL_API_URL=http://bedhcd-prod1.1:8085/api
 
 RUN apk add --no-cache libc6-compat
 

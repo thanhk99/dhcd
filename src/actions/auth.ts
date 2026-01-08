@@ -67,7 +67,7 @@ export async function loginAction(credentials: LoginCredentials) {
 
 export async function logoutAction() {
     try {
-        const baseUrl = (process.env.INTERNAL_API_URL) || process.env.NEXT_PUBLIC_API_URL;
+        const baseUrl = process.env.INTERNAL_API_URL!;
         await axios.post(
             `${baseUrl}/auth/logout`,
             {},
