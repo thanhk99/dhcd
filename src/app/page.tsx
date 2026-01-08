@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Bell } from 'lucide-react';
+import { Bell, LogOut } from 'lucide-react';
 import styles from './page.module.css';
 import { MeetingCard } from '@/components/home/MeetingCard';
 import { NotificationItem } from '@/components/home/NotificationItem';
@@ -10,6 +10,8 @@ import { NotificationModal } from '@/components/home/NotificationModal';
 import { BottomNav } from '@/components/home/BottomNav';
 import { meetingService } from '@/services/meetingService';
 import { userService } from '@/services/userService';
+import { logoutAction } from '@/actions/auth';
+import { tokenManager } from '@/utils/tokenManager';
 import type { Meeting } from '@/types/meeting';
 import type { User } from '@/types/user';
 
@@ -71,6 +73,17 @@ export default function Home() {
     return `Còn ${days.toString().padStart(2, '0')} ngày ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  // Logout handler
+  const handleLogout = async () => {
+    try {
+      await logoutAction();
+      tokenManager.clearAccessToken();
+      router.push('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   return (
     <div className={styles.container}>
       {/* Header */}
@@ -92,9 +105,14 @@ export default function Home() {
             </h1>
           </div>
         </div>
-        <button className={styles.notificationButton} onClick={() => setShowNotifications(true)}>
-          <Bell size={24} />
-        </button>
+        <div className={styles.headerActions}>
+          <button className={styles.logoutButton} onClick={handleLogout} title="Đăng xuất">
+            <LogOut size={20} />
+          </button>
+          <button className={styles.notificationButton} onClick={() => setShowNotifications(true)}>
+            <Bell size={24} />
+          </button>
+        </div>
       </header>
 
       {/* Main Content */}

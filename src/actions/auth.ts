@@ -12,8 +12,9 @@ interface LoginCredentials {
 
 export async function loginAction(credentials: LoginCredentials) {
     try {
+        const baseUrl = (process.env.INTERNAL_API_URL) || process.env.NEXT_PUBLIC_API_URL;
         const response = await axios.post<LoginResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+            `${baseUrl}/auth/login`,
             credentials,
             {
                 withCredentials: true,
@@ -66,8 +67,9 @@ export async function loginAction(credentials: LoginCredentials) {
 
 export async function logoutAction() {
     try {
+        const baseUrl = (process.env.INTERNAL_API_URL) || process.env.NEXT_PUBLIC_API_URL;
         await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
+            `${baseUrl}/auth/logout`,
             {},
             {
                 withCredentials: true,
