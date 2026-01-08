@@ -9,12 +9,16 @@ export function middleware(request: NextRequest) {
     // Cho phép truy cập /login mà không cần token
     if (pathname === '/login') {
         if (token) {
-            return NextResponse.redirect(new URL('/', request.url));
+            const url = request.nextUrl.clone();
+            url.pathname = '/';
+            return NextResponse.redirect(url);
         }
     } else {
         // Các trang khác yêu cầu phải có token
         if (!token) {
-            return NextResponse.redirect(new URL('/login', request.url));
+            const url = request.nextUrl.clone();
+            url.pathname = '/login';
+            return NextResponse.redirect(url);
         }
     }
 

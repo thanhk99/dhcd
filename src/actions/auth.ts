@@ -29,7 +29,7 @@ export async function loginAction(credentials: LoginCredentials) {
             // Lưu accessToken vào cookie (nếu cần cho SSR)
             cookieStore.set('token', loginData.accessToken, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
+                secure: false, // process.env.NODE_ENV === 'production', // Tắt secure để chạy được trên HTTP
                 sameSite: 'lax',
                 maxAge: 60 * 60, // 1 hour for access token
                 path: '/',
@@ -39,7 +39,7 @@ export async function loginAction(credentials: LoginCredentials) {
             if (loginData.refreshToken) {
                 cookieStore.set('refreshToken', loginData.refreshToken, {
                     httpOnly: true,
-                    secure: process.env.NODE_ENV === 'production',
+                    secure: false, // process.env.NODE_ENV === 'production',
                     sameSite: 'lax',
                     maxAge: 60 * 60 * 24 * 7, // 7 days
                     path: '/',
