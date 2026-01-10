@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+
 import { ProcessHeader } from '@/components/features/Election/ProcessHeader';
 import { ElectionBanner } from '@/components/features/Election/ElectionBanner';
 import { TimeInfo } from '@/components/features/Election/TimeInfo';
@@ -83,11 +84,22 @@ export default function ElectionDetailPage() {
                     }))}
                 />
 
+
+
                 {meeting?.elections && meeting.elections.length > 0 && (
                     <CandidatesList candidates={meeting.elections[0].votingOptions} />
                 )}
 
                 <ElectionRules />
+
+                <section className={styles.section} style={{ marginBottom: '40px' }}>
+                    <h3 className={styles.sectionTitle}>GÓP Ý & CÂU HỎI</h3>
+                    <textarea
+                        className={styles.feedbackInput}
+                        placeholder="Nhập ý kiến đóng góp hoặc câu hỏi của bạn cho đoàn chủ tịch..."
+                    />
+                    <button className={styles.feedbackBtn}>Gửi ý kiến</button>
+                </section>
             </div>
 
             <VotingAction shares={((user?.sharesOwned || 0) + (user?.receivedProxyShares || 0)).toLocaleString('vi-VN')} />

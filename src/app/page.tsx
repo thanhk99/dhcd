@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Bell, LogOut } from 'lucide-react';
 import styles from './page.module.css';
 import { MeetingCard } from '@/components/home/MeetingCard';
-import { NotificationItem } from '@/components/home/NotificationItem';
-import { NotificationModal } from '@/components/home/NotificationModal';
+import { ProxyCard } from '@/components/home/ProxyCard';
 import { BottomNav } from '@/components/home/BottomNav';
 import { meetingService } from '@/services/meetingService';
 import { userService } from '@/services/userService';
@@ -20,7 +19,6 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [meeting, setMeeting] = useState<Meeting | null>(null);
   const [loading, setLoading] = useState(true);
-  const [showNotifications, setShowNotifications] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -109,9 +107,6 @@ export default function Home() {
           <button className={styles.logoutButton} onClick={handleLogout} title="Đăng xuất">
             <LogOut size={20} />
           </button>
-          <button className={styles.notificationButton} onClick={() => setShowNotifications(true)}>
-            <Bell size={24} />
-          </button>
         </div>
       </header>
 
@@ -143,54 +138,21 @@ export default function Home() {
           )}
         </section>
 
-        {/* Notifications Section - Keeping inline list as a preview */}
+        {/* Proxy Information Section */}
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitlePlain}>Thông báo</h2>
-            <button className={styles.link} onClick={() => setShowNotifications(true)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>Xem tất cả</button>
+            <h2 className={styles.sectionTitlePlain}>Thông tin uỷ quyền</h2>
           </div>
 
-          <div className={styles.notificationList}>
-            <NotificationItem
-              type="important"
-              badge="QUAN TRỌNG"
-              title="Cập nhật đường dẫn tham dự họp"
-              description="Bạn tổ chức đã cập nhật đường dẫn Zoom mới để đảm bảo chất lượng đường truyền tốt nhất..."
-              timestamp="10:30 Hôm nay"
-            />
-            {/* Show only one item in preview to save space potentially, or keep all */}
-            <NotificationItem
-              type="guide"
-              title="Hướng dẫn biểu quyết trực tuyến"
-              description="Tài liệu hướng dẫn chi tiết các bước thực hiện biểu quyết và bầu cử trên hệ thống quốc gia..."
-              timestamp="16:45 Hôm qua"
-            />
-          </div>
+          <ProxyCard
+            totalShares={user?.totalShares || 0}
+            receivedProxyShares={user?.receivedProxyShares || 0}
+            delegatedShares={user?.delegatedShares || 0}
+            delegationsReceived={user?.delegationsReceived || []}
+            delegationsMade={user?.delegationsMade || []}
+          />
         </section>
       </main>
-
-      {/* Notification Modal */}
-      <NotificationModal isOpen={showNotifications} onClose={() => setShowNotifications(false)}>
-        <NotificationItem
-          type="important"
-          badge="QUAN TRỌNG"
-          title="Cập nhật đường dẫn tham dự họp"
-          description="Bạn tổ chức đã cập nhật đường dẫn Zoom mới để đảm bảo chất lượng đường truyền tốt nhất..."
-          timestamp="10:30 Hôm nay"
-        />
-        <NotificationItem
-          type="guide"
-          title="Hướng dẫn biểu quyết trực tuyến"
-          description="Tài liệu hướng dẫn chi tiết các bước thực hiện biểu quyết và bầu cử trên hệ thống quốc gia..."
-          timestamp="16:45 Hôm qua"
-        />
-        <NotificationItem
-          type="info"
-          title="Công bố danh sách ứng viên"
-          description="Danh sách ứng viên bầu cử vào Hội đồng quản trị và Ban Kiểm soát nhiệm kỳ mới đã được công..."
-          timestamp="09:00 22/04"
-        />
-      </NotificationModal>
 
       {/* Bottom Navigation */}
       <BottomNav activeTab="home" />

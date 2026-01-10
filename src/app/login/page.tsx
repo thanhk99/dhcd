@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { ChevronLeft, Eye, EyeOff } from 'lucide-react';
 import styles from './login.module.css';
@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/Input/Input';
 import { Toast } from '@/components/ui/Toast/Toast';
 import { loginAction } from '@/actions/auth';
 import { tokenManager } from '@/utils/tokenManager';
+import { QRScanner } from '@/components/features/QRScanner';
 
 const UserIcon = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
@@ -32,8 +33,10 @@ const QrCodeIcon = () => (
     </svg>
 );
 
-export default function LoginPage() {
+const LoginForm = () => {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const tokenParam = searchParams.get('token');
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -43,6 +46,7 @@ export default function LoginPage() {
         type: 'success',
         show: false
     });
+    const [showScanner, setShowScanner] = useState(false);
 
     const togglePassword = () => {
         setShowPassword(!showPassword);
@@ -80,6 +84,116 @@ export default function LoginPage() {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    useEffect(() => {
+        const autoLogin = async () => {
+            if (tokenParam) {
+                setIsLoading(true);
+                try {
+                    // Import action dynamically or rely on it being available if imported at top
+                    const { magicLoginAction } = await import('@/actions/auth');
+                    const result = await magicLoginAction(tokenParam);
+
+                    if (result.success) {
+                        if (result.data?.accessToken) {
+                            tokenManager.setAccessToken(result.data.accessToken);
+                        }
+                        setToast({ message: 'Đăng nhập tự động thành công!', type: 'success', show: true });
+                        setTimeout(() => {
+                            router.push('/');
+                        }, 1000);
+                    } else {
+                        setToast({ message: result.error || 'Token đăng nhập không hợp lệ.', type: 'error', show: true });
+                        setIsLoading(false);
+                    }
+                } catch (error) {
+                    console.error('Auto login error:', error);
+                    setToast({ message: 'Lỗi đăng nhập tự động.', type: 'error', show: true });
+                    setIsLoading(false);
+                }
+            }
+        };
+
+        autoLogin();
+    }, [tokenParam, router]);
+
+    const handleScanSuccess = async (decodedText: string) => {
+        setShowScanner(false);
+        try {
+            // Try parsing as JSON for direct login (legacy/debug support)
+            const parsed = JSON.parse(decodedText);
+            if (parsed.identifier && parsed.password) {
+                setIdentifier(parsed.identifier);
+                setPassword(parsed.password);
+
+                setIsLoading(true);
+                try {
+                    const result = await loginAction({ identifier: parsed.identifier, password: parsed.password });
+                    if (result.success) {
+                        if (result.data?.accessToken) {
+                            tokenManager.setAccessToken(result.data.accessToken);
+                        }
+                        setToast({ message: 'Đăng nhập bằng QR thành công!', type: 'success', show: true });
+                        setTimeout(() => {
+                            router.push('/');
+                        }, 1000);
+                    } else {
+                        setToast({ message: result.error || 'Đăng nhập QR thất bại.', type: 'error', show: true });
+                        setIsLoading(false);
+                    }
+                } catch (error) {
+                    console.error('QR Login error:', error);
+                    setToast({ message: 'Lỗi đăng nhập QR.', type: 'error', show: true });
+                    setIsLoading(false);
+                }
+                return;
+            }
+        } catch (e) {
+            // Not JSON
+        }
+
+        // If not JSON or standard login failed, try Magic Token Login
+        setIsLoading(true);
+        // We'll treat the text as a potential magic token first
+        // If it's a short numeric code (shareholder code), magic login will likely fail fast on backend
+        // or we can optimistically check regex if we knew the format.
+        // For now, we try the API.
+        try {
+            // Needed to import magicLoginAction at the top
+            const { magicLoginAction } = await import('@/actions/auth');
+
+            const result = await magicLoginAction(decodedText);
+
+            if (result.success) {
+                if (result.data?.accessToken) {
+                    tokenManager.setAccessToken(result.data.accessToken);
+                }
+                setToast({ message: 'Đăng nhập Magic Token thành công!', type: 'success', show: true });
+                setTimeout(() => {
+                    router.push('/');
+                }, 1000);
+                return;
+            }
+
+            // If magic login failed, fall back to "User scanned a shareholder code" behavior
+            // We assume that if it's not a valid token, it might just be the code.
+            setIsLoading(false);
+            setIdentifier(decodedText);
+            setToast({ message: 'Đã nhập mã cổ đông: ' + decodedText, type: 'success', show: true });
+
+        } catch (error) {
+            console.error("Magic login attempt error", error);
+            setIsLoading(false);
+            // Final fallback
+            setIdentifier(decodedText);
+            setToast({ message: 'Đã nhập mã cổ đông: ' + decodedText, type: 'success', show: true });
+        }
+    };
+
+    const handleScanFailure = (error: any) => {
+        // Optional: handle visual feedback or ignore repeated errors
+        // console.warn(error);
     };
 
     const closeToast = () => {
@@ -142,11 +256,19 @@ export default function LoginPage() {
                 </div>
 
                 <div className={styles.biometric}>
-                    <button className={styles.biometricBtn}>
+                    <button className={styles.biometricBtn} onClick={() => setShowScanner(true)}>
                         <QrCodeIcon />
                     </button>
                     <p className={styles.biometricLabel}>Quét mã QR</p>
                 </div>
+
+                {showScanner && (
+                    <QRScanner
+                        onScanSuccess={handleScanSuccess}
+                        onScanFailure={handleScanFailure}
+                        onClose={() => setShowScanner(false)}
+                    />
+                )}
             </main>
             {toast.show && (
                 <Toast
@@ -156,5 +278,13 @@ export default function LoginPage() {
                 />
             )}
         </div>
+    );
+}
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-black" />}>
+            <LoginForm />
+        </Suspense>
     );
 }

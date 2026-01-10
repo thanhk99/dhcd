@@ -2,7 +2,8 @@ import axios, { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'ax
 import { tokenManager } from '@/utils/tokenManager';
 import { ApiResponse, ApiError } from '@/types/api.types';
 // Base API URL
-export const API_BASE_URL = 'http://dhcd.vix.local:8085/api';
+// export const API_BASE_URL = 'http://dhcd.vix.local:8085/api;
+export const API_BASE_URL = 'http://localhost:8085/api';
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({

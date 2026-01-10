@@ -1,19 +1,21 @@
 'use client';
 
 import React from 'react';
-import { Home, FileCheck, FileText, User } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Home, History, FileText, User } from 'lucide-react';
 import styles from './BottomNav.module.css';
 
 interface BottomNavProps {
-    activeTab?: 'home' | 'vote' | 'docs' | 'profile';
+    activeTab?: 'home' | 'history' | 'docs' | 'profile';
 }
 
 export const BottomNav: React.FC<BottomNavProps> = ({ activeTab = 'home' }) => {
+    const router = useRouter();
     const tabs = [
-        { id: 'home', label: 'Trang chủ', icon: Home },
-        { id: 'vote', label: 'Bỏ phiếu', icon: FileCheck },
-        { id: 'docs', label: 'Tài liệu', icon: FileText },
-        { id: 'profile', label: 'Cá nhân', icon: User },
+        { id: 'home', label: 'Trang chủ', icon: Home, path: '/' },
+        { id: 'history', label: 'Lịch sử', icon: History, path: '/history' },
+        { id: 'docs', label: 'Tài liệu', icon: FileText, path: '/documents' },
+        { id: 'profile', label: 'Cá nhân', icon: User, path: '/profile' },
     ];
 
     return (
@@ -26,6 +28,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab = 'home' }) => {
                     <button
                         key={tab.id}
                         className={`${styles.tab} ${isActive ? styles.active : ''}`}
+                        onClick={() => router.push(tab.path)}
                     >
                         <Icon size={24} />
                         <span>{tab.label}</span>
