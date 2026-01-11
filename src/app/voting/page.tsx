@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { ProcessHeader } from '@/components/features/Election/ProcessHeader';
 import { ShieldCheck } from 'lucide-react';
 import { SummaryCards } from '@/components/features/Voting/SummaryCards';
@@ -15,6 +16,7 @@ import { Toast } from '@/components/ui/Toast/Toast';
 import styles from './VotingPage.module.css';
 
 export default function VotingPage() {
+    const router = useRouter();
     const [meeting, setMeeting] = useState<Meeting | null>(null);
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
@@ -144,7 +146,7 @@ export default function VotingPage() {
             await Promise.all(resolutionPromises);
             await fetchData(); // Refresh data to get newest userVotes from API
             setHasVoted(true);
-            setToast({ message: 'Gửi phiếu bầu thành công!', type: 'success' });
+            router.push('/voting/success');
         } catch (error) {
             console.error('Submit failed:', error);
             setToast({ message: 'Có lỗi xảy ra khi gửi phiếu bầu.', type: 'error' });

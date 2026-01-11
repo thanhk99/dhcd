@@ -38,3 +38,18 @@ export interface UpdateProfileRequest {
     fullName?: string;
     email?: string;
 }
+
+export interface VoteHistory {
+    voteId: string;
+    resolutionId: string;
+    resolutionTitle: string;
+    meetingId: string;
+    meetingTitle: string;
+    votingOptionId: string;
+    votingOptionName: string;
+    voteWeight: number;
+    ipAddress: string;
+    userAgent: string;
+    votedAt: string;
+    action: string;
+}

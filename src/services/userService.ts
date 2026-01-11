@@ -1,5 +1,5 @@
 import { apiService } from '@/lib/api-client';
-import { User, UpdateProfileRequest } from '@/types/user';
+import { User, UpdateProfileRequest, VoteHistory } from '@/types/user';
 
 
 export const userService = {
@@ -20,5 +20,30 @@ export const userService = {
             params: data
         });
         return response.data;
+    },
+
+    getVotingHistory: async (page: number = 0, size: number = 10): Promise<{ content: VoteHistory[], totalPages: number, totalElements: number }> => {
+        const response = await apiService.get<any>('/users/me/votes', {
+            params: { page, size }
+        });
+
+        // Handle direct array response (client-side pagination)
+        if (Array.isArray(response.data)) {
+            const allItems = response.data;
+            const start = page * size;
+            const end = start + size;
+            return {
+                content: allItems.slice(start, end),
+                totalPages: Math.ceil(allItems.length / size),
+                totalElements: allItems.length
+            };
+        }
+
+        // Handle wrapped response (server-side pagination)
+        return {
+            content: response.data?.content || [],
+            totalPages: response.data?.totalPages || 0,
+            totalElements: response.data?.totalElements || 0
+        };
     },
 };

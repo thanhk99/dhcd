@@ -87,7 +87,14 @@ export default function ElectionDetailPage() {
 
 
                 {meeting?.elections && meeting.elections.length > 0 && (
-                    <CandidatesList candidates={meeting.elections[0].votingOptions} />
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                        {meeting.elections.map((election, index) => (
+                            <section key={election.id || index} className={styles.section}>
+                                <h3 className={styles.sectionTitle}>{election.title}</h3>
+                                <CandidatesList candidates={election.votingOptions} />
+                            </section>
+                        ))}
+                    </div>
                 )}
 
                 <ElectionRules />

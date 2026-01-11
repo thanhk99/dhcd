@@ -1,0 +1,105 @@
+.container {
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    color: var(--text-primary);
+    padding-bottom: 80px;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 110px 24px 40px 24px;
+    text-align: center;
+}
+
+.successIcon {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, var(--cyan-accent) 0%, rgba(0, 191, 255, 0.2) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    box-shadow: 0 0 30px rgba(0, 191, 255, 0.3);
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    letter-spacing: -0.5px;
+}
+
+.infoBox {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.infoBox p {
+    font-size: 15px;
+    color: var(--text-secondary);
+}
+
+.highlight {
+    color: var(--cyan-accent);
+    font-weight: 600;
+}
+
+.transactionTime {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+}
+
+.buttonGroup {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.actionBtn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.primaryBtn {
+    background-color: var(--cyan-accent);
+    color: #000;
+    border: none;
+}
+
+.primaryBtn:hover {
+    opacity: 0.9;
+}
+
+.secondaryBtn {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.secondaryBtn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
