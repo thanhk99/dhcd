@@ -39,16 +39,19 @@ export class WebSocketService {
     }
 
     public connect() {
-        if (this.connected) return;
+        console.log('WebSocket connection is temporarily disabled.');
+        return;
 
-        const token = tokenManager.getAccessToken();
-        if (token) {
-            this.client.connectHeaders = {
-                Authorization: `Bearer ${token}`,
-            };
-        }
+        // if (this.connected) return;
 
-        this.client.activate();
+        // const token = tokenManager.getAccessToken();
+        // if (token) {
+        //     this.client.connectHeaders = {
+        //         Authorization: `Bearer ${token}`,
+        //     };
+        // }
+
+        // this.client.activate();
     }
 
     public disconnect() {
