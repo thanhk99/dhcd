@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Bell, LogOut } from 'lucide-react';
+import { Bell, LogOut, Moon, Sun } from 'lucide-react';
+import { useTheme } from '@/components/providers/ThemeProvider';
 import styles from './page.module.css';
 import { MeetingCard } from '@/components/home/MeetingCard';
 import { ProxyCard } from '@/components/home/ProxyCard';
@@ -11,6 +12,8 @@ import { meetingService } from '@/services/meetingService';
 import { userService } from '@/services/userService';
 import { logoutAction } from '@/actions/auth';
 import { tokenManager } from '@/utils/tokenManager';
+import { NotificationModal } from '@/components/home/NotificationModal';
+import { NotificationItem } from '@/components/home/NotificationItem';
 import type { Meeting } from '@/types/meeting';
 import type { User } from '@/types/user';
 
@@ -19,6 +22,34 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [meeting, setMeeting] = useState<Meeting | null>(null);
   const [loading, setLoading] = useState(true);
+  const { isDarkMode, toggleTheme } = useTheme();
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+  const dummyNotifications = [
+    {
+      id: 1,
+      type: 'important' as const,
+      badge: 'QUAN TRỌNG',
+      title: 'Khai mạc Đại hội Cổ đông Thường niên 2025',
+      description: 'Đại hội chính thức bắt đầu lúc 08:30 ngày 23/01/2026. Quý cổ đông vui lòng ổn định chỗ ngồi và kiểm tra thiết bị biểu quyết.',
+      timestamp: '10 phút trước'
+    },
+    {
+      id: 2,
+      type: 'guide' as const,
+      badge: 'HƯỚNG DẪN',
+      title: 'Hướng dẫn sử dụng hệ thống biểu quyết trực tuyến',
+      description: 'Quý cổ đông có thể xem video và tài liệu hướng dẫn biểu quyết trực tuyến tại mục Tài liệu.',
+      timestamp: '1 giờ trước'
+    },
+    {
+      id: 3,
+      type: 'info' as const,
+      title: 'Công bố báo cáo tài chính năm 2024 (đã kiểm toán)',
+      description: 'Báo cáo tài chính đã được tải lên hệ thống để quý cổ đông tra cứu.',
+      timestamp: '2 giờ trước'
+    }
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,6 +135,16 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.headerActions}>
+          <button className={styles.actionButton} title="Thông báo" onClick={() => setIsNotificationOpen(true)}>
+            <Bell size={20} />
+          </button>
+          <button
+            className={`${styles.actionButton} ${isDarkMode ? styles.dark : styles.light}`}
+            title="Đổi giao diện"
+            onClick={toggleTheme}
+          >
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
           <button className={styles.logoutButton} onClick={handleLogout} title="Đăng xuất">
             <LogOut size={20} />
           </button>
@@ -124,6 +165,7 @@ export default function Home() {
 
           {meeting ? (
             <MeetingCard
+              image="/meeting-banner.png"
               title={meeting.title}
               time={formatMeetingTime(meeting.startTime)}
               location={meeting.location}
@@ -153,6 +195,20 @@ export default function Home() {
           />
         </section>
       </main>
+
+      {/* Notification Modal */}
+      <NotificationModal isOpen={isNotificationOpen} onClose={() => setIsNotificationOpen(false)}>
+        {dummyNotifications.map(notification => (
+          <NotificationItem
+            key={notification.id}
+            type={notification.type}
+            badge={notification.badge}
+            title={notification.title}
+            description={notification.description}
+            timestamp={notification.timestamp}
+          />
+        ))}
+      </NotificationModal>
 
       {/* Bottom Navigation */}
       <BottomNav activeTab="home" />

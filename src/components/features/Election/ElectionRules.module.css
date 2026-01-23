@@ -14,8 +14,8 @@
 }
 
 .iconWrapper {
-    background-color: rgba(37, 99, 235, 0.1);
-    color: var(--accent);
+    background-color: var(--bg-primary);
+    color: var(--cyan-accent);
     width: 48px;
     height: 48px;
     border-radius: 8px;

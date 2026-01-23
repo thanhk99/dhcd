@@ -77,8 +77,11 @@ export default function ProfilePage() {
     };
 
     const handleChangePassword = () => {
-        setToast({ message: 'Tính năng chuyển đến trang Đổi mật khẩu.', type: 'success' });
-        // router.push('/change-password');
+        router.push('/profile/change-password');
+    };
+
+    const handleLoginHistory = () => {
+        router.push('/history');
     };
 
     if (loading) return <div className={styles.container} style={{ padding: 20, textAlign: 'center' }}>Đang tải...</div>;
@@ -244,7 +247,7 @@ export default function ProfilePage() {
                         <ArrowLeft size={16} style={{ transform: 'rotate(180deg)' }} />
                     </div>
 
-                    <div className={styles.securityItem}>
+                    <div className={styles.securityItem} onClick={handleLoginHistory}>
                         <div className={styles.securityItemInfo}>
                             <History size={20} />
                             <div className={styles.securityItemText}>

@@ -7,7 +7,7 @@
     position: sticky;
     top: 0;
     z-index: 10;
-    border-bottom: 1px solid var(--divider);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .backButton {

@@ -3,10 +3,11 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(10, 10, 10, 0.8);
+    background-color: var(--bg-primary);
     backdrop-filter: blur(10px);
+    opacity: 0.95;
     padding: 1rem;
-    border-top: 1px solid var(--divider);
+    border-top: 1px solid var(--border-color);
     z-index: 100;
 }
 
@@ -36,9 +37,8 @@
 }
 
 .button {
-    background-color: #2563eb;
-    /* Vibrant blue */
-    color: white;
+    background-color: var(--cyan-accent);
+    color: #ffffff;
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 8px;

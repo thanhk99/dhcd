@@ -96,7 +96,7 @@ export default function ResultsPage() {
                                     className={styles.circleBg}
                                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                                     fill="none"
-                                    stroke="#333"
+                                    stroke="var(--border-color)"
                                     strokeWidth="3"
                                 />
                                 <path
@@ -114,7 +114,7 @@ export default function ResultsPage() {
                                     strokeDashoffset="-65"
                                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                                     fill="none"
-                                    stroke="#555"
+                                    stroke="var(--text-secondary)"
                                     strokeWidth="3"
                                 />
                                 <path
@@ -123,7 +123,7 @@ export default function ResultsPage() {
                                     strokeDashoffset="-90"
                                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                                     fill="none"
-                                    stroke="#444"
+                                    stroke="var(--bg-secondary)"
                                     strokeWidth="3"
                                 />
                             </svg>
@@ -141,12 +141,12 @@ export default function ResultsPage() {
                                 <span className={styles.percent}>65%</span>
                             </div>
                             <div className={styles.legendItem}>
-                                <span className={styles.dot} style={{ backgroundColor: '#555' }}></span>
+                                <span className={styles.dot} style={{ backgroundColor: 'var(--text-secondary)' }}></span>
                                 <span className={styles.label}>Không đ.ý</span>
                                 <span className={styles.percent}>25%</span>
                             </div>
                             <div className={styles.legendItem}>
-                                <span className={styles.dot} style={{ backgroundColor: '#444' }}></span>
+                                <span className={styles.dot} style={{ backgroundColor: 'var(--border-color)' }}></span>
                                 <span className={styles.label}>Trắng</span>
                                 <span className={styles.percent}>10%</span>
                             </div>
@@ -169,11 +169,11 @@ export default function ResultsPage() {
                                 <div className={styles.candidateInfo}>
                                     {!candidate.isBlank ? (
                                         <div className={styles.avatar}>
-                                            <User2 size={24} color="#888" style={{ margin: 10 }} />
+                                            <User2 size={24} color="var(--text-secondary)" style={{ margin: 10 }} />
                                         </div>
                                     ) : (
                                         <div className={styles.avatar} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <Archive size={20} color="#888" />
+                                            <Archive size={20} color="var(--text-secondary)" />
                                         </div>
                                     )}
                                     <div>
@@ -192,7 +192,7 @@ export default function ResultsPage() {
                                     className={styles.progressFill}
                                     style={{
                                         width: `${candidate.percent}%`,
-                                        backgroundColor: candidate.elected ? '#00BFFF' : '#333'
+                                        backgroundColor: candidate.elected ? 'var(--cyan-accent)' : 'var(--border-color)'
                                     }}
                                 />
                             </div>

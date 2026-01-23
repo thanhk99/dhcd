@@ -9,9 +9,10 @@ import { AgendaSection } from '@/components/features/Election/AgendaSection';
 import { CandidatesList } from '@/components/features/Election/CandidateCard';
 import { ElectionRules } from '@/components/features/Election/ElectionRules';
 import { VotingAction } from '@/components/features/Election/VotingAction';
+import { Modal } from '@/components/ui/Modal/Modal';
 import { meetingService } from '@/services/meetingService';
 import { userService } from '@/services/userService';
-import { Meeting } from '@/types/meeting';
+import { Meeting, VotingOption } from '@/types/meeting';
 import { User } from '@/types/user';
 import styles from './election-detail.module.css';
 
@@ -19,6 +20,10 @@ export default function ElectionDetailPage() {
     const [meeting, setMeeting] = useState<Meeting | null>(null);
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+
+    // Modal states
+    const [selectedCandidate, setSelectedCandidate] = useState<VotingOption | null>(null);
+    const [selectedResolution, setSelectedResolution] = useState<{ title: string; description: string } | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -66,6 +71,7 @@ export default function ElectionDetailPage() {
 
             <div className={styles.content}>
                 <ElectionBanner
+                    image="/meeting-banner.png"
                     status={meeting?.status === 'ONGOING' ? 'Đang diễn ra' : 'Sắp diễn ra'}
                     timeLeft={meeting ? getCountdown(meeting.startTime) : '...'}
                     title={meeting?.title || 'Đang tải thông tin...'}
@@ -82,16 +88,18 @@ export default function ElectionDetailPage() {
                         title: r.title,
                         description: r.description || ''
                     }))}
+                    onViewDetail={setSelectedResolution}
                 />
-
-
 
                 {meeting?.elections && meeting.elections.length > 0 && (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
                         {meeting.elections.map((election, index) => (
                             <section key={election.id || index} className={styles.section}>
                                 <h3 className={styles.sectionTitle}>{election.title}</h3>
-                                <CandidatesList candidates={election.votingOptions} />
+                                <CandidatesList
+                                    candidates={election.votingOptions}
+                                    onViewProfile={setSelectedCandidate}
+                                />
                             </section>
                         ))}
                     </div>
@@ -110,6 +118,49 @@ export default function ElectionDetailPage() {
             </div>
 
             <VotingAction shares={((user?.sharesOwned || 0) + (user?.receivedProxyShares || 0)).toLocaleString('vi-VN')} />
+
+            {/* Candidate Profile Modal */}
+            <Modal
+                isOpen={!!selectedCandidate}
+                onClose={() => setSelectedCandidate(null)}
+                title="Hồ sơ ứng viên"
+            >
+                {selectedCandidate && (
+                    <div className={styles.modalProfile}>
+                        <div className={styles.modalAvatarWrapper}>
+                            <img
+                                src={selectedCandidate.photoUrl || 'https://i.pravatar.cc/150?u=default'}
+                                alt={selectedCandidate.name}
+                                className={styles.modalAvatar}
+                            />
+                        </div>
+                        <h3 className={styles.modalName}>{selectedCandidate.name}</h3>
+                        <p className={styles.modalPosition}>{selectedCandidate.position || 'Chưa xác định'}</p>
+                        <div className={styles.modalDivider} />
+                        <div className={styles.modalBio}>
+                            <h4>Tiểu sử và Kinh nghiệm</h4>
+                            <p>{selectedCandidate.bio || 'Chưa có thông tin tiểu sử chi tiết.'}</p>
+                        </div>
+                    </div>
+                )}
+            </Modal>
+
+            {/* Resolution Detail Modal */}
+            <Modal
+                isOpen={!!selectedResolution}
+                onClose={() => setSelectedResolution(null)}
+                title="Chi tiết Nghị trình"
+            >
+                {selectedResolution && (
+                    <div className={styles.modalResolution}>
+                        <h3 className={styles.modalResTitle}>{selectedResolution.title}</h3>
+                        <div className={styles.modalDivider} />
+                        <div className={styles.modalResDescription}>
+                            <p>{selectedResolution.description || 'Chưa có thông tin chi tiết cho nghị trình này.'}</p>
+                        </div>
+                    </div>
+                )}
+            </Modal>
         </main>
     );
 }

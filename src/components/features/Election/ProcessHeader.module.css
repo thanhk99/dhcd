@@ -4,8 +4,8 @@
     left: 0;
     width: 100%;
     z-index: 50;
-    background-color: #0c0c0c;
-    border-bottom: 1px solid #1a1a1a;
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .header {
@@ -18,7 +18,7 @@
 .backBtn {
     background: none;
     border: none;
-    color: #ffffff;
+    color: var(--text-primary);
     cursor: pointer;
     padding: 8px;
     display: flex;
@@ -36,7 +36,7 @@
 .cancelBtn {
     background: none;
     border: none;
-    color: #888888;
+    color: var(--text-secondary);
     cursor: pointer;
     font-size: 14px;
     padding: 8px;
@@ -53,7 +53,7 @@
     width: 24px;
     height: 4px;
     border-radius: 2px;
-    background-color: #333333;
+    background-color: var(--border-color);
 }
 
 .dotActive {
