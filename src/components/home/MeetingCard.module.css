@@ -1,9 +1,34 @@
 .card {
     background: var(--bg-card);
     border-radius: 16px;
-    padding: 24px;
     margin-bottom: 24px;
     border: 1px solid var(--border-color);
+    overflow: hidden;
+    /* Ensure image fits radius */
+    display: flex;
+    flex-direction: column;
+}
+
+.thumbnailContainer {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+}
+
+.thumbnailImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .thumbnailImage {
+    transform: scale(1.05);
+}
+
+.content {
+    padding: 24px;
 }
 
 .title {
@@ -88,22 +113,4 @@
 
 .voteButton:active {
     transform: translateY(0);
-}
-
-.pauseButton {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 14px;
-    color: var(--text-primary);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-}
-
-.pauseButton:hover {
-    background: var(--bg-card);
-    border-color: var(--cyan-accent);
 }

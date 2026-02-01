@@ -1,31 +1,39 @@
+import React from 'react';
 import styles from './CandidateCard.module.css';
 import { VotingOption } from '@/types/meeting';
 
 interface CandidateCardProps {
-    name: string;
-    position: string | null;
-    imageUrl: string | null;
+    candidate: VotingOption;
+    onViewProfile: (candidate: VotingOption) => void;
 }
 
-export const CandidateCard: React.FC<CandidateCardProps> = ({ name, position, imageUrl }) => {
+export const CandidateCard: React.FC<CandidateCardProps> = ({ candidate, onViewProfile }) => {
     const defaultImage = 'https://i.pravatar.cc/150?u=default';
+    const { name, position, photoUrl } = candidate;
+
     return (
         <div className={styles.card}>
             <div className={styles.avatarWrapper}>
-                <img src={imageUrl || defaultImage} alt={name} className={styles.avatar} />
+                <img src={photoUrl || defaultImage} alt={name} className={styles.avatar} />
             </div>
             <h4 className={styles.name}>{name}</h4>
             <p className={styles.position}>{position || 'Chưa xác định'}</p>
-            <button className={styles.profileButton}>Hồ sơ</button>
+            <button
+                className={styles.profileButton}
+                onClick={() => onViewProfile(candidate)}
+            >
+                Hồ sơ
+            </button>
         </div>
     );
 };
 
 interface CandidatesListProps {
     candidates?: VotingOption[];
+    onViewProfile: (candidate: VotingOption) => void;
 }
 
-export const CandidatesList: React.FC<CandidatesListProps> = ({ candidates = [] }) => {
+export const CandidatesList: React.FC<CandidatesListProps> = ({ candidates = [], onViewProfile }) => {
     if (candidates.length === 0) {
         return (
             <section className={styles.section}>
@@ -42,9 +50,8 @@ export const CandidatesList: React.FC<CandidatesListProps> = ({ candidates = [] 
                 {candidates.map((candidate, index) => (
                     <CandidateCard
                         key={candidate.id || index}
-                        name={candidate.name}
-                        position={candidate.position}
-                        imageUrl={candidate.photoUrl}
+                        candidate={candidate}
+                        onViewProfile={onViewProfile}
                     />
                 ))}
             </div>

@@ -80,7 +80,7 @@
 .headerActions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
 }
 
 .logoutButton {
@@ -98,9 +98,48 @@
 }
 
 .logoutButton:hover {
-    background: var(--bg-secondary);
+    background: #ff4444;
     border-color: #ff4444;
-    color: #ff4444;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
+}
+
+.actionButton {
+    width: 42px;
+    height: 42px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(8px);
+}
+
+.actionButton:hover {
+    background: var(--bg-secondary);
+    border-color: var(--cyan-accent);
+    color: var(--cyan-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 191, 255, 0.2);
+}
+
+.themeButton {
+    composes: actionButton;
+}
+
+.themeButton.dark {
+    color: #FFD700;
+    /* Gold for Sun */
+}
+
+.themeButton.light {
+    color: #4A90E2;
+    /* Blue for Moon */
 }
 
 .notificationButton {

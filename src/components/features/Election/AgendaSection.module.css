@@ -42,8 +42,8 @@
 }
 
 .number {
-    background-color: rgba(37, 99, 235, 0.1);
-    color: var(--accent);
+    background-color: var(--bg-primary);
+    color: var(--cyan-accent);
     width: 32px;
     height: 32px;
     border-radius: 50%;

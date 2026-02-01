@@ -46,4 +46,9 @@ export const userService = {
             totalElements: response.data?.totalElements || 0
         };
     },
+
+    changePassword: async (data: any): Promise<any> => {
+        const response = await apiService.post<any>('/users/change-password', data);
+        return response.data;
+    },
 };

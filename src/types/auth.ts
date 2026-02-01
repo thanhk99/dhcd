@@ -16,6 +16,11 @@ export interface LoginResponse extends AuthUser {
     refreshToken?: string;
 }
 
+export interface ChangePasswordRequest {
+    oldPassword: string;
+    newPassword: string;
+}
+
 export interface LogoutResponse {
     message: string;
 }

@@ -11,7 +11,7 @@ interface ElectionBannerProps {
     timeLeft: string;
     title: string;
     description: string;
-    // imageUrl removed
+    image?: string;
 }
 
 export const ElectionBanner: React.FC<ElectionBannerProps> = ({
@@ -19,11 +19,13 @@ export const ElectionBanner: React.FC<ElectionBannerProps> = ({
     timeLeft,
     title,
     description,
+    image,
 }) => {
     return (
         <div className={styles.banner}>
-            <div className={styles.imageWrapper} style={{ background: 'linear-gradient(to bottom, #1a1a1a, #0c0c0c)' }}>
-                {/* Image and overlay removed */}
+            <div className={styles.imageWrapper} style={{ background: image ? 'none' : 'linear-gradient(to bottom, var(--bg-secondary), var(--bg-primary))' }}>
+                {image && <img src={image} alt={title} className={styles.image} />}
+                <div className={styles.overlay} />
                 <div className={styles.tags}>
                     <div className={styles.statusTag}>
                         <Circle size={10} fill="currentColor" className={styles.pulse} />

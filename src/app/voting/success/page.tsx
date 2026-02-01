@@ -58,7 +58,7 @@ export default function VoteSuccessPage() {
 
             <main className={styles.content}>
                 <div className={styles.successIcon}>
-                    <Check size={50} color="#fff" strokeWidth={3} />
+                    <Check size={50} color="var(--bg-primary)" strokeWidth={3} />
                 </div>
 
                 <h2 className={styles.title}>Bỏ phiếu thành công!</h2>

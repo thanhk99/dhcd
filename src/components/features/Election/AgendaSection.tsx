@@ -5,11 +5,12 @@ interface AgendaItemProps {
     index: number;
     title: string;
     description: string;
+    onClick: () => void;
 }
 
-const AgendaItem: React.FC<AgendaItemProps> = ({ index, title, description }) => {
+const AgendaItem: React.FC<AgendaItemProps> = ({ index, title, description, onClick }) => {
     return (
-        <div className={styles.item}>
+        <div className={styles.item} onClick={onClick}>
             <div className={styles.number}>{index}</div>
             <div className={styles.itemContent}>
                 <h4 className={styles.itemTitle}>{title}</h4>
@@ -21,14 +22,22 @@ const AgendaItem: React.FC<AgendaItemProps> = ({ index, title, description }) =>
 
 interface AgendaSectionProps {
     items?: { title: string; description: string }[];
+    onViewDetail: (item: { title: string; description: string }) => void;
 }
 
-export const AgendaSection: React.FC<AgendaSectionProps> = ({ items = [] }) => {
+export const AgendaSection: React.FC<AgendaSectionProps> = ({ items = [], onViewDetail }) => {
     return (
         <section className={styles.section}>
             <div className={styles.header}>
                 <h3 className={styles.title}>Nội dung nghị trình</h3>
-                <button className={styles.detailButton}>Chi tiết</button>
+                {items.length > 0 && (
+                    <button
+                        className={styles.detailButton}
+                        onClick={() => onViewDetail(items[0])} // Default to first item or generic detail
+                    >
+                        Chi tiết
+                    </button>
+                )}
             </div>
             {items.length > 0 ? (
                 <div className={styles.list}>
@@ -38,6 +47,7 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ items = [] }) => {
                             index={index + 1}
                             title={item.title}
                             description={item.description}
+                            onClick={() => onViewDetail(item)}
                         />
                     ))}
                 </div>

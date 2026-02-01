@@ -188,7 +188,7 @@ export default function VotingPage() {
                     <>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '24px' }}>
                             <h3 className={styles.sectionTitle}>{(meeting?.resolutions?.length || 0) > 0 ? 'II' : 'I'}. BẦU CỬ HĐQT</h3>
-                            <button style={{ background: '#1a1a1a', border: 'none', color: '#888', fontSize: 12, padding: '4px 8px', borderRadius: 4 }}>
+                            <button style={{ background: 'var(--bg-secondary)', border: 'none', color: 'var(--text-secondary)', fontSize: 12, padding: '4px 8px', borderRadius: 4 }}>
                                 Bầu dồn phiếu
                             </button>
                         </div>
@@ -208,7 +208,7 @@ export default function VotingPage() {
                             <h3 className={styles.sectionTitle}>
                                 {(meeting?.resolutions?.length || 0) > 0 ? (boardCandidates.length > 0 ? 'III' : 'II') : (boardCandidates.length > 0 ? 'II' : 'I')}. BẦU CỬ BAN KIỂM SOÁT
                             </h3>
-                            <button style={{ background: '#1a1a1a', border: 'none', color: '#888', fontSize: 12, padding: '4px 8px', borderRadius: 4 }}>
+                            <button style={{ background: 'var(--bg-secondary)', border: 'none', color: 'var(--text-secondary)', fontSize: 12, padding: '4px 8px', borderRadius: 4 }}>
                                 Bầu dồn phiếu
                             </button>
                         </div>
@@ -231,7 +231,7 @@ export default function VotingPage() {
 
             <footer className={styles.footer}>
                 <div className={styles.authNotice}>
-                    <ShieldCheck size={14} color="#888" />
+                    <ShieldCheck size={14} color="var(--text-secondary)" />
                     <span>Bảo mật xác thực qua FaceID/TouchID khi gửi</span>
                 </div>
                 <div className={styles.actionButtons}>

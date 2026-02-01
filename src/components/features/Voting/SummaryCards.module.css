@@ -6,10 +6,10 @@
 }
 
 .card {
-    background-color: #1a1a1a;
+    background-color: var(--bg-secondary);
     padding: 16px;
     border-radius: 12px;
-    border: 1px solid #333;
+    border: 1px solid var(--border-color);
 }
 
 .iconWrapper {
@@ -35,7 +35,7 @@
 
 .label {
     font-size: 11px;
-    color: #888888;
+    color: var(--text-secondary);
     font-weight: 600;
     text-transform: uppercase;
 }
