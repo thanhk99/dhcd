@@ -83,8 +83,10 @@ export default function VotingPage() {
 
     if (loading) return <div style={{ padding: '20px', textAlign: 'center' }}>Đang tải...</div>;
 
-    const totalShares = (user?.sharesOwned || 0) + (user?.receivedProxyShares || 0);
-    const totalSharesStr = totalShares.toLocaleString('vi-VN');
+    const totalVotingRights = user?.totalShares || 0;
+    const sharesOwned = user?.sharesOwned || 0;
+    const totalVotingRightsStr = totalVotingRights.toLocaleString('vi-VN');
+    const sharesOwnedStr = sharesOwned.toLocaleString('vi-VN');
 
     const boardElection = meeting?.elections?.find(e => e.electionType === 'BOARD_OF_DIRECTORS');
     const inspectionElection = meeting?.elections?.find(e => e.electionType === 'SUPERVISORY_BOARD');
@@ -169,7 +171,7 @@ export default function VotingPage() {
                     Thực hiện quyền biểu quyết các tờ trình và bầu cử thành viên HĐQT, BKS nhiệm kỳ mới.
                 </p>
 
-                <SummaryCards sharesOwned={totalSharesStr} votingRights={totalSharesStr} />
+                <SummaryCards sharesOwned={sharesOwnedStr} votingRights={totalVotingRightsStr} />
 
                 {meeting?.resolutions && meeting.resolutions.length > 0 && (
                     <>
@@ -191,7 +193,7 @@ export default function VotingPage() {
                             </button>
                         </div>
                         <CumulativeVotingSection
-                            baseRights={totalShares}
+                            baseRights={totalVotingRights}
                             coefficient={Math.max(1, boardCandidates.length)}
                             candidates={boardCandidates}
                             initialAllocations={boardVotes}
@@ -211,7 +213,7 @@ export default function VotingPage() {
                             </button>
                         </div>
                         <CumulativeVotingSection
-                            baseRights={totalShares}
+                            baseRights={totalVotingRights}
                             coefficient={Math.max(1, inspectionCandidates.length)}
                             candidates={inspectionCandidates}
                             initialAllocations={inspectionVotes}

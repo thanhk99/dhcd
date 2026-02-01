@@ -109,7 +109,7 @@ export default function ElectionDetailPage() {
                 </section>
             </div>
 
-            <VotingAction shares={((user?.sharesOwned || 0) + (user?.receivedProxyShares || 0)).toLocaleString('vi-VN')} />
+            <VotingAction shares={(user?.totalShares || 0).toLocaleString('vi-VN')} />
         </main>
     );
 }

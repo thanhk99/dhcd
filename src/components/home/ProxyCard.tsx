@@ -7,6 +7,7 @@ import styles from './ProxyCard.module.css';
 import { Delegation } from '@/types/user';
 
 interface ProxyCardProps {
+    sharesOwned: number;
     totalShares: number;
     receivedProxyShares: number;
     delegatedShares: number;
@@ -15,14 +16,15 @@ interface ProxyCardProps {
 }
 
 export const ProxyCard: React.FC<ProxyCardProps> = ({
+    sharesOwned,
     totalShares,
     receivedProxyShares,
     delegatedShares,
     delegationsReceived = [],
     delegationsMade = []
 }) => {
-    const selfVotingRights = Math.max(0, totalShares - delegatedShares);
-    const totalVotingRights = selfVotingRights + receivedProxyShares;
+    const selfVotingRights = Math.max(0, totalShares - receivedProxyShares); // Thực tế totalShares đã bao gồm uỷ quyền
+    const totalVotingRights = totalShares;
 
     return (
         <div className={styles.container}>
@@ -32,7 +34,7 @@ export const ProxyCard: React.FC<ProxyCardProps> = ({
                 </div>
                 <div className={styles.info}>
                     <span className={styles.label}>TỔNG CỔ PHẦN SỞ HỮU</span>
-                    <span className={styles.value}>{(totalShares).toLocaleString('vi-VN')} CP</span>
+                    <span className={styles.value}>{(sharesOwned).toLocaleString('vi-VN')} CP</span>
                 </div>
             </div>
 
@@ -44,7 +46,7 @@ export const ProxyCard: React.FC<ProxyCardProps> = ({
                     <div className={styles.subInfo}>
                         <span className={styles.subLabel}>Bản thân</span>
                         <span className={styles.subValue}>
-                            {Math.max(0, totalShares - delegatedShares).toLocaleString('vi-VN')}
+                            {(sharesOwned - delegatedShares).toLocaleString('vi-VN')}
                         </span>
                     </div>
                 </div>

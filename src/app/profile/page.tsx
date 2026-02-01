@@ -121,9 +121,14 @@ export default function ProfilePage() {
             {/* Stats */}
             <div className={styles.statsGrid}>
                 <div className={styles.statCard}>
-                    <span className={styles.statLabel}>Tổng cổ phần sở hữu</span>
-                    <div className={styles.statValue}>{(user?.totalShares || 0).toLocaleString('vi-VN')}</div>
+                    <span className={styles.statLabel}>Cổ phần sở hữu</span>
+                    <div className={styles.statValue}>{(user?.sharesOwned || 0).toLocaleString('vi-VN')}</div>
                     <div className={styles.statIcon}><PieChart size={40} /></div>
+                </div>
+                <div className={styles.statCard} style={{ background: 'var(--cyan-gradient)', color: 'white' }}>
+                    <span className={styles.statLabel} style={{ color: 'rgba(255,255,255,0.8)' }}>Quyền biểu quyết</span>
+                    <div className={styles.statValue}>{(user?.totalShares || 0).toLocaleString('vi-VN')}</div>
+                    <div className={styles.statIcon} style={{ opacity: 0.3 }}><CheckCircle size={40} /></div>
                 </div>
             </div>
 
