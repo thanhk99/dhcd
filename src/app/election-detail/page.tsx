@@ -117,7 +117,7 @@ export default function ElectionDetailPage() {
                 </section>
             </div>
 
-            <VotingAction shares={(user?.totalShares || 0).toLocaleString('vi-VN')} />
+            <VotingAction shares={(user?.attendingShares || 0).toLocaleString('vi-VN')} />
 
             {/* Candidate Profile Modal */}
             <Modal

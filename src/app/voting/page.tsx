@@ -83,7 +83,7 @@ export default function VotingPage() {
 
     if (loading) return <div style={{ padding: '20px', textAlign: 'center' }}>Đang tải...</div>;
 
-    const totalVotingRights = user?.totalShares || 0;
+    const totalVotingRights = user?.attendingShares || 0;
     const sharesOwned = user?.sharesOwned || 0;
     const totalVotingRightsStr = totalVotingRights.toLocaleString('vi-VN');
     const sharesOwnedStr = sharesOwned.toLocaleString('vi-VN');

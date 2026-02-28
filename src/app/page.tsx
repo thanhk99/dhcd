@@ -188,7 +188,7 @@ export default function Home() {
 
           <ProxyCard
             sharesOwned={user?.sharesOwned || 0}
-            totalShares={user?.totalShares || 0}
+            totalShares={user?.attendingShares || 0}
             receivedProxyShares={user?.receivedProxyShares || 0}
             delegatedShares={user?.delegatedShares || 0}
             delegationsReceived={user?.delegationsReceived || []}

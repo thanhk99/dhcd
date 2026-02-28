@@ -23,8 +23,8 @@ export const ProxyCard: React.FC<ProxyCardProps> = ({
     delegationsReceived = [],
     delegationsMade = []
 }) => {
-    const selfVotingRights = Math.max(0, totalShares - receivedProxyShares); // Thực tế totalShares đã bao gồm uỷ quyền
-    const totalVotingRights = totalShares;
+    const selfVotingRights = (sharesOwned - delegatedShares);
+    const totalVotingRights = totalShares; // Ở đây totalShares sẽ được truyền là attendingShares từ cha
 
     return (
         <div className={styles.container}>

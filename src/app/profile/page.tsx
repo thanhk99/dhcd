@@ -130,7 +130,7 @@ export default function ProfilePage() {
                 </div>
                 <div className={styles.statCard} style={{ background: 'var(--cyan-gradient)', color: 'white' }}>
                     <span className={styles.statLabel} style={{ color: 'rgba(255,255,255,0.8)' }}>Quyền biểu quyết</span>
-                    <div className={styles.statValue}>{(user?.totalShares || 0).toLocaleString('vi-VN')}</div>
+                    <div className={styles.statValue}>{(user?.attendingShares || 0).toLocaleString('vi-VN')}</div>
                     <div className={styles.statIcon} style={{ opacity: 0.3 }}><CheckCircle size={40} /></div>
                 </div>
             </div>

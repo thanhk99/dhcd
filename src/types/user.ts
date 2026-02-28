@@ -19,6 +19,7 @@ export interface User extends AuthUser {
     sharesOwned: number;
     receivedProxyShares: number;
     delegatedShares: number;
+    attendingShares: number;
     totalShares: number;
     phoneNumber: string;
     investorCode: string;
